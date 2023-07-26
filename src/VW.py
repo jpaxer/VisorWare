@@ -149,12 +149,12 @@ else:
     cfgfile.close()
 
 # Core Variable Initialization ######################################
-MenuItem1 = 0  # AcoustiVisor
-MenuItem2 = 0  # Settings.
-MenuItem3 = 0  # Power.
-MenuItem4 = 0  # Weather App.
-MenuItem5 = 0  # Clock Screen.
-MenuItem6 = 0  # BLANK AND UNUSED
+# MenuItem1 = 0  # AcoustiVisor
+# MenuItem2 = 0  # Settings.
+# MenuItem3 = 0  # Power.
+# MenuItem4 = 0  # Weather App.
+# MenuItem5 = 0  # Clock Screen.
+# MenuItem6 = 0  # BLANK AND UNUSED
 
 debugStatus = True
 screenOff = False
@@ -460,22 +460,22 @@ def AcoustiVisor(): # Core Application function for the Speech-to-ASL Demo app.
 #####################################################################
 
 print("[INTERFACE] : Main Menu is live.")
-
+app_ind = 1
 while True:
     if screenOff == False:
-        if MenuItem1 == 1:
+        if app_ind == 1:
             VisionEngine.render("img/"+LanguageSet+"/Settings.ppm", debugStatus)
             
-        elif MenuItem2 == 1:
+        elif app_ind == 2:
             VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)        
 
-        elif MenuItem3 == 1:
+        elif app_ind == 3:
             VisionEngine.render("img/"+LanguageSet+"/Weather.ppm", debugStatus)
 
-        elif MenuItem4 == 1:
+        elif app_ind == 4:
             VisionEngine.render("img/"+LanguageSet+"/Acoustivisor.ppm", debugStatus)
 
-        elif MenuItem5 == 1:
+        elif app_ind == 5:
             print('How did you get here lmao')
 
         if GPIO.input(screenb) == False:
@@ -483,73 +483,81 @@ while True:
 
         if GPIO.input(leftb) == False:
             print('[INTERFACE] : Button-Press --> LEFT')
-            if MenuItem1 == 1:
-                MenuItem4 = 1
-                MenuItem3 = 0
-                MenuItem2 = 0
-                MenuItem1 = 0            
-            elif MenuItem2 == 1:
-                MenuItem1 = 1
-                MenuItem3 = 0
-                MenuItem4 = 0
-                MenuItem2 = 0            
-            elif MenuItem3 == 1:
-                MenuItem2 = 1
-                MenuItem1 = 0
-                MenuItem4 = 0
-                MenuItem3 = 0            
-            elif MenuItem4 == 1:
-                MenuItem3 = 1
-                MenuItem2 = 0
-                MenuItem1 = 0
-                MenuItem4 = 0
+            if app_ind == 1:
+                app_ind = 4
+            else:
+                app_ind -= 1
+            # if MenuItem1 == 1:
+            #     MenuItem4 = 1
+            #     MenuItem3 = 0
+            #     MenuItem2 = 0
+            #     MenuItem1 = 0            
+            # elif MenuItem2 == 1:
+            #     MenuItem1 = 1
+            #     MenuItem3 = 0
+            #     MenuItem4 = 0
+            #     MenuItem2 = 0            
+            # elif MenuItem3 == 1:
+            #     MenuItem2 = 1
+            #     MenuItem1 = 0
+            #     MenuItem4 = 0
+            #     MenuItem3 = 0            
+            # elif MenuItem4 == 1:
+            #     MenuItem3 = 1
+            #     MenuItem2 = 0
+            #     MenuItem1 = 0
+            #     MenuItem4 = 0
             time.sleep(ButtonPressDelay)
 
         elif GPIO.input(rightb) == False:
             print('[INTERFACE] : Button-Press --> RIGHT')
-            if MenuItem1 == 1:
-                MenuItem2 = 1
-                MenuItem3 = 0
-                MenuItem4 = 0
-                MenuItem1 = 0
-            elif MenuItem2 == 1:
-                MenuItem3 = 1
-                MenuItem1 = 0
-                MenuItem4 = 0
-                MenuItem2 = 0
-            elif MenuItem3 == 1:
-                MenuItem4 = 1
-                MenuItem1 = 0
-                MenuItem2 = 0
-                MenuItem3 = 0
-            elif MenuItem4 == 1:
-                MenuItem1 = 1
-                MenuItem2 = 0
-                MenuItem3 = 0
-                MenuItem4 = 0
+            if app_ind == 4:
+                app_ind = 1
+            else:
+                app_ind += 1
+            # if MenuItem1 == 1:
+            #     MenuItem2 = 1
+            #     MenuItem3 = 0
+            #     MenuItem4 = 0
+            #     MenuItem1 = 0
+            # elif MenuItem2 == 1:
+            #     MenuItem3 = 1
+            #     MenuItem1 = 0
+            #     MenuItem4 = 0
+            #     MenuItem2 = 0
+            # elif MenuItem3 == 1:
+            #     MenuItem4 = 1
+            #     MenuItem1 = 0
+            #     MenuItem2 = 0
+            #     MenuItem3 = 0
+            # elif MenuItem4 == 1:
+            #     MenuItem1 = 1
+            #     MenuItem2 = 0
+            #     MenuItem3 = 0
+            #     MenuItem4 = 0
             time.sleep(ButtonPressDelay)
 
         elif GPIO.input(homeb) == False:
             print('[INTERFACE] : Button-Press --> HOME')
-            if MenuItem1 == 1:
+            if app_ind == 1:
                 print(Base.WARNING, "[INTERFACE] : Starting the Settings App.", Base.END)
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)
                 APPSettings()
                 
-            elif MenuItem4 == 1:
+            elif app_ind == 4:
                 print(Base.WARNING, "[INTERFACE] : Starting AcoustiVisor Demo App.", Base.END)
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)  
                 AcoustiVisor()
 
-            elif MenuItem2 == 1:
+            elif app_ind == 2:
                 print(Base.WARNING, "[INTERFACE] : Starting the Power options interface.", Base.END)
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)
                 APPPower()
 
-            elif MenuItem3 == 1:
+            elif app_ind == 3:
                 print(Base.WARNING, "[INTERFACE] : Starting Weather App.", Base.END)
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)
