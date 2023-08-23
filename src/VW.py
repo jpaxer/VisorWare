@@ -156,6 +156,8 @@ else:
 # MenuItem5 = 0  # Clock Screen.
 # MenuItem6 = 0  # BLANK AND UNUSED
 
+menu_items = []
+
 debugStatus = True
 screenOff = False
 MenuItem1 = 1
@@ -404,6 +406,7 @@ def APPPower(): # Application function that allows options for power control.
     print('[POWER] : Exiting Power options and returning to menu.')
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
+menu_items.append(APPPower)
 
 def APPSettings(): # Application function that controls settings.
     global LanguageSet   
@@ -416,7 +419,7 @@ def APPSettings(): # Application function that controls settings.
     print('[SETTINGS] : Exiting Settings and returning to the main menu.')
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
-
+menu_items.append(APPSettings)
 def APPWeather(): # By Nanda Gopal.
     if VWUtils.connCheck() == True:
         VWWeather.weather(debugStatus)
@@ -428,7 +431,7 @@ def APPWeather(): # By Nanda Gopal.
     print("[WEATHER] : Exiting the Weather app and returning to the main menu.")
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
-
+menu_items.append(APPWeather)
 def ClckScrn():
     VWClck.clckscrn(debugStatus)
 
@@ -458,7 +461,7 @@ def AcoustiVisor(): # Core Application function for the Speech-to-ASL Demo app.
     time.sleep(0.5)
 
 #####################################################################
-
+menu_items.append(Acoustivisor)
 print("[INTERFACE] : Main Menu is live.")
 app_ind = 1
 while True:
@@ -484,7 +487,7 @@ while True:
         if GPIO.input(leftb) == False:
             print('[INTERFACE] : Button-Press --> LEFT')
             if app_ind == 1:
-                app_ind = 4
+                app_ind = len(menu_items)
             else:
                 app_ind -= 1
             # if MenuItem1 == 1:
@@ -511,57 +514,19 @@ while True:
 
         elif GPIO.input(rightb) == False:
             print('[INTERFACE] : Button-Press --> RIGHT')
-            if app_ind == 4:
+            if app_ind == len(menu_items):
                 app_ind = 1
             else:
                 app_ind += 1
-            # if MenuItem1 == 1:
-            #     MenuItem2 = 1
-            #     MenuItem3 = 0
-            #     MenuItem4 = 0
-            #     MenuItem1 = 0
-            # elif MenuItem2 == 1:
-            #     MenuItem3 = 1
-            #     MenuItem1 = 0
-            #     MenuItem4 = 0
-            #     MenuItem2 = 0
-            # elif MenuItem3 == 1:
-            #     MenuItem4 = 1
-            #     MenuItem1 = 0
-            #     MenuItem2 = 0
-            #     MenuItem3 = 0
-            # elif MenuItem4 == 1:
-            #     MenuItem1 = 1
-            #     MenuItem2 = 0
-            #     MenuItem3 = 0
-            #     MenuItem4 = 0
+            
             time.sleep(ButtonPressDelay)
 
         elif GPIO.input(homeb) == False:
             print('[INTERFACE] : Button-Press --> HOME')
-            if app_ind == 1:
-                print(Base.WARNING, "[INTERFACE] : Starting the Settings App.", Base.END)
-                VisionEngine.appStart(LanguageSet, debugStatus)
-                time.sleep(0.5)
-                APPSettings()
-                
-            elif app_ind == 4:
-                print(Base.WARNING, "[INTERFACE] : Starting AcoustiVisor Demo App.", Base.END)
-                VisionEngine.appStart(LanguageSet, debugStatus)
-                time.sleep(0.5)  
-                AcoustiVisor()
-
-            elif app_ind == 2:
-                print(Base.WARNING, "[INTERFACE] : Starting the Power options interface.", Base.END)
-                VisionEngine.appStart(LanguageSet, debugStatus)
-                time.sleep(0.5)
-                APPPower()
-
-            elif app_ind == 3:
-                print(Base.WARNING, "[INTERFACE] : Starting Weather App.", Base.END)
-                VisionEngine.appStart(LanguageSet, debugStatus)
-                time.sleep(0.5)
-                APPWeather()
+            print(Base.WARNING, f"[INTERFACE] : Starting { menu_items[app_ind - 1].__name__ }", Base.END)
+            VisionEngine.appStart(LanguageSet, debugStatus)
+            time.sleep(0.5)
+            menu_items[app_ind - 1]()
             time.sleep(ButtonPressDelay)
 
     if screenOff == True:
