@@ -224,24 +224,26 @@ print (Base.FAILRED,"This is a development version of VisorWare.", Base.END)
 
 # APPLICATIONS: #####################################################
 def APPPower(): # Application function that allows options for power control.
-    PowerItem1 = 1 # Shutdown
-    PowerItem2 = 0 # Reboot
-    PowerItem3 = 0 # Force quit VisorWare
-    PowerItem4 = 0 # Exit to menu
-    PowerExit = 0
+    power_items = []
+    # PowerItem1 = 1 # Shutdown
+    # PowerItem2 = 0 # Reboot
+    # PowerItem3 = 0 # Force quit VisorWare
+    # PowerItem4 = 0 # Exit to menu
+    # PowerExit = 0
+    power_ind = 1
     screenOff = False
     while PowerExit == 0:
         if screenOff == False:
-            if PowerItem1 == 1:
+            if power_ind == 1:
                 VisionEngine.render("img/"+LanguageSet+"/POWERReboot.ppm", debugStatus)
 
-            elif PowerItem2 == 1:
+            elif power_ind == 2:
                 VisionEngine.render("img/"+LanguageSet+"/POWERShutdown.ppm", debugStatus)
 
-            elif PowerItem3 == 1:
+            elif power_ind == 3:
                 VisionEngine.render("img/"+LanguageSet+"/POWERQuit.ppm", debugStatus)
 
-            elif PowerItem4 == 1:
+            elif power_ind == 4:
                 VisionEngine.render("img/"+LanguageSet+"/ExitToMenu.ppm", debugStatus)
 
             if GPIO.input(screenb) == False:
@@ -249,55 +251,64 @@ def APPPower(): # Application function that allows options for power control.
 
             if GPIO.input(leftb) == False:
                 print('[INTERFACE] : Button-Press --> LEFT')
-                if PowerItem1 == 1:
-                    PowerItem4 = 1
-                    PowerItem3 = 0
-                    PowerItem2 = 0
-                    PowerItem1 = 0
-                elif PowerItem2 == 1:
-                    PowerItem1 = 1
-                    PowerItem3 = 0
-                    PowerItem4 = 0
-                    PowerItem2 = 0
-                elif PowerItem3 == 1:
-                    PowerItem2 = 1
-                    PowerItem1 = 0
-                    PowerItem4 = 0
-                    PowerItem3 = 0
-                elif PowerItem4 == 1:
-                    PowerItem3 = 1
-                    PowerItem2 = 0
-                    PowerItem1 = 0
-                    PowerItem4 = 0
+                if power_ind == 1:
+                    power_ind = 4
+                else:
+                    power_ind -= 1
+                # if PowerItem1 == 1:
+                #     PowerItem4 = 1
+                #     PowerItem3 = 0
+                #     PowerItem2 = 0
+                #     PowerItem1 = 0
+                # elif PowerItem2 == 1:
+                #     PowerItem1 = 1
+                #     PowerItem3 = 0
+                #     PowerItem4 = 0
+                #     PowerItem2 = 0
+                # elif PowerItem3 == 1:
+                #     PowerItem2 = 1
+                #     PowerItem1 = 0
+                #     PowerItem4 = 0
+                #     PowerItem3 = 0
+                # elif PowerItem4 == 1:
+                #     PowerItem3 = 1
+                #     PowerItem2 = 0
+                #     PowerItem1 = 0
+                #     PowerItem4 = 0
                 time.sleep(ButtonPressDelay)
 
             elif GPIO.input(rightb) == False:
+                if power_ind == 4:
+                    power_ind = 1
+                else:
+                    power_ind += 1
                 print('[INTERFACE] : Button-Press --> RIGHT')
-                if PowerItem1 == 1:
-                    PowerItem2 = 1
-                    PowerItem3 = 0
-                    PowerItem4 = 0
-                    PowerItem1 = 0
-                elif PowerItem2 == 1:
-                    PowerItem3 = 1
-                    PowerItem1 = 0
-                    PowerItem4 = 0
-                    PowerItem2 = 0
-                elif PowerItem3 == 1:
-                    PowerItem4 = 1
-                    PowerItem1 = 0
-                    PowerItem2 = 0
-                    PowerItem3 = 0
-                elif PowerItem4 == 1:
-                    PowerItem1 = 1
-                    PowerItem2 = 0
-                    PowerItem3 = 0
-                    PowerItem4 = 0
+                # if PowerItem1 == 1:
+                #     PowerItem2 = 1
+                #     PowerItem3 = 0
+                #     PowerItem4 = 0
+                #     PowerItem1 = 0
+                # elif PowerItem2 == 1:
+                #     PowerItem3 = 1
+                #     PowerItem1 = 0
+                #     PowerItem4 = 0
+                #     PowerItem2 = 0
+                # elif PowerItem3 == 1:
+                #     PowerItem4 = 1
+                #     PowerItem1 = 0
+                #     PowerItem2 = 0
+                #     PowerItem3 = 0
+                # elif PowerItem4 == 1:
+                #     PowerItem1 = 1
+                #     PowerItem2 = 0
+                #     PowerItem3 = 0
+                #     PowerItem4 = 0
                 time.sleep(ButtonPressDelay)
 
             elif GPIO.input(homeb) == False:
                 print('[INTERFACE] : Button-Press --> HOME')
-                if PowerItem1 == 1:
+                
+                if power_ind == 1:
                     time.sleep(0.2)
                     print("[POWER] : Reboot dialog box opened.")
                     rbdb = 1
@@ -340,7 +351,7 @@ def APPPower(): # Application function that allows options for power control.
                             time.sleep(ButtonPressDelay)
                     print("[POWER] : Reboot dialog box closed.")
                 
-                elif PowerItem2 == 1:
+                elif power_ind == 2:
                     time.sleep(0.2)
                     print("[POWER] : Shutdown dialog box opened.")
                     sddb = 1
@@ -385,13 +396,13 @@ def APPPower(): # Application function that allows options for power control.
                     print("[POWER] : Shutdown dialog box closed.")
 
                 
-                elif PowerItem3 == 1:
+                elif power_ind == 3:
                     print(Base.FAILRED, "[POWER] : Quitting VisorWare.", Base.END)
                     VisionEngine.render("img/"+LanguageSet+"/splash.ppm", debugStatus)
                     time.sleep(3)
                     VisionEngine.render("img/"+LanguageSet+"/POWERQuitConsequence.ppm", debugStatus)
                     exit()
-                elif PowerItem4 == 1:
+                elif power_ind == 4:
                     PowerExit = 1
                 time.sleep(ButtonPressDelay)
         
@@ -461,7 +472,7 @@ def AcoustiVisor(): # Core Application function for the Speech-to-ASL Demo app.
     time.sleep(0.5)
 
 #####################################################################
-menu_items.append(Acoustivisor)
+menu_items.append(AcoustiVisor)
 print("[INTERFACE] : Main Menu is live.")
 app_ind = 1
 while True:
