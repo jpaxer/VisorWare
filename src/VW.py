@@ -478,10 +478,10 @@ app_ind = 1
 while True:
     if screenOff == False:
         if app_ind == 1:
-            VisionEngine.render("img/"+LanguageSet+"/Settings.ppm", debugStatus)
+            VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)
             
         elif app_ind == 2:
-            VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)        
+            VisionEngine.render("img/"+LanguageSet+"/Settings.ppm", debugStatus)        
 
         elif app_ind == 3:
             VisionEngine.render("img/"+LanguageSet+"/Weather.ppm", debugStatus)
