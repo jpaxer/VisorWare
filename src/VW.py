@@ -229,7 +229,7 @@ def APPPower(): # Application function that allows options for power control.
     # PowerItem2 = 0 # Reboot
     # PowerItem3 = 0 # Force quit VisorWare
     # PowerItem4 = 0 # Exit to menu
-    # PowerExit = 0
+    PowerExit = 0
     power_ind = 1
     screenOff = False
     while PowerExit == 0:
