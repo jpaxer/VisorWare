@@ -457,7 +457,9 @@ def APPWeather(): # By Nanda Gopal.
     print("[WEATHER] : Exiting the Weather app and returning to the main menu.")
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
-menu_items.append(APPWeather)
+
+Weather = App("Weather", "/Weather.ppm", APPWeather)
+
 def ClckScrn():
     VWClck.clckscrn(debugStatus)
 
@@ -487,25 +489,25 @@ def AcoustiVisor(): # Core Application function for the Speech-to-ASL Demo app.
     time.sleep(0.5)
 
 #####################################################################
-menu_items.append(AcoustiVisor)
+acoustivisor = App("AcoustiVisor", "/Acoustivisor.ppm", AcoustiVisor)
+
 print("[INTERFACE] : Main Menu is live.")
 app_ind = 1
 while True:
     if screenOff == False:
-        if app_ind == 1:
-            VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)
+        # if app_ind == 1:
+        #     VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)
             
-        elif app_ind == 2:
-            VisionEngine.render("img/"+LanguageSet+"/Settings.ppm", debugStatus)        
+        # elif app_ind == 2:
+        #     VisionEngine.render("img/"+LanguageSet+"/Settings.ppm", debugStatus)        
 
-        elif app_ind == 3:
-            VisionEngine.render("img/"+LanguageSet+"/Weather.ppm", debugStatus)
+        # elif app_ind == 3:
+        #     VisionEngine.render("img/"+LanguageSet+"/Weather.ppm", debugStatus)
 
-        elif app_ind == 4:
-            VisionEngine.render("img/"+LanguageSet+"/Acoustivisor.ppm", debugStatus)
+        # elif app_ind == 4:
+        #     VisionEngine.render("img/"+LanguageSet+"/Acoustivisor.ppm", debugStatus)
+        VisionEngine.render("img/"+LanguageSet+menu_items[app_ind - 1].icon, debugStatus)
 
-        elif app_ind == 5:
-            print('How did you get here lmao')
 
         if GPIO.input(screenb) == False:
             screenOff = True
