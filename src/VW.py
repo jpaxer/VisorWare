@@ -156,6 +156,9 @@ else:
 # MenuItem5 = 0  # Clock Screen.
 # MenuItem6 = 0  # BLANK AND UNUSED
 
+
+    
+
 menu_items = []
 
 debugStatus = True
@@ -221,6 +224,15 @@ print(Base.OKGREEN,'                   \/                   \/        \/        
 
 print (Base.OKGREEN,"\nVersion 1.0 | Build ",currversion , Base.END)
 print (Base.FAILRED,"This is a development version of VisorWare.", Base.END)
+
+#application class
+class App:
+    def __init__(self, name, icon_path, func):
+        self.name = name
+        self.icon = icon_path
+        self.func = func
+        menu_items.append(self)
+
 
 # APPLICATIONS: #####################################################
 def APPPower(): # Application function that allows options for power control.
@@ -417,7 +429,8 @@ def APPPower(): # Application function that allows options for power control.
     print('[POWER] : Exiting Power options and returning to menu.')
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
-menu_items.append(APPPower)
+
+Power = App("Power", "/Power.ppm", APPPower)
 
 def APPSettings(): # Application function that controls settings.
     global LanguageSet   
@@ -430,7 +443,9 @@ def APPSettings(): # Application function that controls settings.
     print('[SETTINGS] : Exiting Settings and returning to the main menu.')
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
-menu_items.append(APPSettings)
+
+Settings = App("Settings", "/Settings.ppm", APPSettings)
+
 def APPWeather(): # By Nanda Gopal.
     if VWUtils.connCheck() == True:
         VWWeather.weather(debugStatus)
