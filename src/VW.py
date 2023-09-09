@@ -551,7 +551,7 @@ while True:
 
         elif GPIO.input(homeb) == False:
             print('[INTERFACE] : Button-Press --> HOME')
-            print(Base.WARNING, f"[INTERFACE] : Starting { menu_items[app_ind - 1].__name__ }", Base.END)
+            print(Base.WARNING, f"[INTERFACE] : Starting { menu_items[app_ind - 1].name }", Base.END)
             VisionEngine.appStart(LanguageSet, debugStatus)
             time.sleep(0.5)
             menu_items[app_ind - 1]()
