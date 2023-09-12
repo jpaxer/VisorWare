@@ -2,11 +2,14 @@
 
 ---------------------------------------------------
 ---------------------------------------------------
-|    Version: 1.00
-|    Build: #2006201910
-|    Source: 1zc/GitHubREPO
-|    Remarks: "  "
+|    Version: 1.10
+|    Build: #2006201911
+|    Source: Jpaxer/GitHubREPO
 |
-|    Dated (DD/MM/YYYY): 20/06/2019
+
+    Description: Redid the menu system, fixed the update proccess and made adding applications much more accessible.
+
+|    Dated (MM/DD/YYYY): 9/20/2023
+|
 ---------------------------------------------------
 ---------------------------------------------------
